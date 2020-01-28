@@ -20,10 +20,17 @@ void printConnectionPaths(int from, const std::vector<ConnectionPath>& paths) {
 
 void checkConnectionPaths(const Graph& graph, int from, int to,
                           int expected_size) {
+  std::cout << "all connections between " << from << " and " << to << ":\n";
   std::vector<ConnectionPath> paths = graph[from]->connectionPaths(to);
   printConnectionPaths(from, paths);
   std::cout << "\n";
   ASSERT_EQ(paths.size(), expected_size);
+}
+
+void addConnection(Graph& graph, int id1, int id2, double distance) {
+  graph.addConnection(id1, id2, distance);
+  std::cout << "added connection between " << id1 << " and " << id2
+            << " with distance " << distance << "\n";
 }
 
 class MockNode : public Node {
@@ -40,18 +47,19 @@ TEST(tmp, test1) {
     graph.insertNode(std::make_shared<MockNode>(graph));
   }
 
-  graph.addConnection(3, 4, 1);
-  graph.addConnection(4, 9, 1);
-  graph.addConnection(8, 0, 1);
-  graph.addConnection(2, 3, 1);
-  graph.addConnection(5, 6, 1);
-  graph.addConnection(2, 9, 1);
-  graph.addConnection(5, 9, 1);
-  graph.addConnection(7, 3, 1);
-  graph.addConnection(4, 8, 1);
-  graph.addConnection(5, 6, 1);
-  graph.addConnection(0, 2, 1);
-  graph.addConnection(6, 1, 1);
+  addConnection(graph, 3, 4, 1);
+  addConnection(graph, 4, 9, 1);
+  addConnection(graph, 8, 0, 1);
+  addConnection(graph, 2, 3, 1);
+  addConnection(graph, 5, 6, 1);
+  addConnection(graph, 2, 9, 1);
+  addConnection(graph, 5, 9, 1);
+  addConnection(graph, 7, 3, 1);
+  addConnection(graph, 4, 8, 1);
+  addConnection(graph, 5, 6, 1);
+  addConnection(graph, 0, 2, 1);
+  addConnection(graph, 6, 1, 1);
+  std::cout << std::endl;
 
   ASSERT_TRUE(graph[0]->isConnectedDirectly(8));
   ASSERT_TRUE(graph[0]->isConnectedDirectly(2));
