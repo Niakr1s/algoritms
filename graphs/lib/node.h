@@ -1,6 +1,7 @@
 #ifndef NODE_H
 #define NODE_H
 
+#include <iostream>
 #include <memory>
 #include <optional>
 #include <set>
@@ -14,6 +15,8 @@ class Graph;
 
 class Node {
  public:
+  virtual ~Node() = default;
+
   Node(const Graph& graph);
 
   int id() const;
@@ -24,6 +27,10 @@ class Node {
 
   bool isConnectedDirectly(int id);
 
+  virtual std::string info() const = 0;
+
+  friend std::ostream& operator<<(std::ostream& out, const Node& node);
+
  private:
   static int counter;
   int id_;
@@ -31,6 +38,8 @@ class Node {
 
   std::vector<Connection> connections_;
 };  // namespace graphs
+
+std::ostream& operator<<(std::ostream& out, const Node& node);
 
 using NodePtr = std::shared_ptr<Node>;
 using NodeWeakPtr = std::weak_ptr<Node>;

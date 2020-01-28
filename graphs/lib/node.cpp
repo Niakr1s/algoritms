@@ -55,4 +55,8 @@ bool Node::isConnectedDirectly(int id) {
 
 int Node::counter = 0;
 
+std::ostream &operator<<(std::ostream &out, const Node &node) {
+  return out << node.info();
+}
+
 }  // namespace graphs

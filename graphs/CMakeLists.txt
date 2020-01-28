@@ -7,8 +7,15 @@ set(subproject_tests ${subproject}_tests)
 add_subdirectory(lib)
 add_subdirectory(tests)
 
-add_executable(${subproject} main.cpp)
+file(GLOB app *)
+
+add_executable(${subproject} ${app})
 
 target_link_libraries(${subproject}
     ${subproject_lib}
+)
+
+
+target_include_directories(${subproject}
+    PRIVATE ${Boost_INCLUDE_DIRS}
 )

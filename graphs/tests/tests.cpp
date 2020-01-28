@@ -9,6 +9,8 @@ int main(int argc, char* argv[]) {
   return RUN_ALL_TESTS();
 }
 
+namespace tests {
+
 void printConnectionPaths(int from, const std::vector<ConnectionPath>& paths) {
   for (auto& path : paths) {
     std::cout << from << ">" << path << ", distance = " << path.distance()
@@ -24,11 +26,18 @@ void checkConnectionPaths(const Graph& graph, int from, int to,
   ASSERT_EQ(paths.size(), expected_size);
 }
 
+class MockNode : public Node {
+ public:
+  using Node::Node;
+
+  std::string info() const override { return ""; }
+};
+
 TEST(tmp, test1) {
   Graph graph;
 
   for (int i = 0; i != 10; ++i) {
-    graph.insertNode(std::make_shared<Node>(graph));
+    graph.insertNode(std::make_shared<MockNode>(graph));
   }
 
   graph.addConnection(3, 4, 1);
@@ -70,3 +79,5 @@ TEST(tmp, test1) {
   checkConnectionPaths(graph, 5, 6, 2);
   checkConnectionPaths(graph, 7, 2, 3);
 }
+
+}  // namespace tests
