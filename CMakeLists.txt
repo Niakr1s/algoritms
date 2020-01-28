@@ -26,3 +26,4 @@ find_package(Boost REQUIRED)
 find_package(GTest CONFIG REQUIRED)
 
 add_subdirectory(links)
+add_subdirectory(graphs)
